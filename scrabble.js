@@ -43,8 +43,40 @@ for (let element of tenPoints){
 }
 
 // YOUR CODE HERE
-Scrabble.prototype.helloWorld = function() {
-  return 'hello world!';
+Scrabble.prototype = {
+  say_hello: function(){return 'hello world!'},
+
+  score: function(word){
+  	word=word.toUpperCase();
+  	var total=0;
+  	word.split("").forEach(function(letter){
+  		total+=ScoreChart[letter];
+  	});
+  	if (word.length==7){
+  		total+=50
+  	}
+  	return total;
+  }, 
+  highestScorefrom: function(wordArray){
+  	var self=this;
+  	var scores = wordArray.map(function(thisWord){
+  		return self.score(thisWord)
+  	});
+  	// return scores;
+  	var max=0;
+  	var max_index;
+
+  	scores.forEach(function(score,i){
+  		if (score>max){
+  			max=score;
+  			max_index=i;
+  		}else if(score==max && wordArray[i].length<wordArray[max_index].length){
+  			max=score;
+  			max_index=i;
+  		}
+  	});
+  	return wordArray[max_index];
+  }
 };
 
 module.exports = Scrabble;
