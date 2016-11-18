@@ -79,4 +79,69 @@ Scrabble.prototype = {
   }
 };
 
+var Player = function(name) {
+	this.name= name;
+	this.plays=[];
+	this.points= 0;
+	this.scrabbleGame= new Scrabble;
+};
+
+Player.prototype = {
+  say_hello: function(){return 'hello world!';},
+  play: function(word){ 
+  	if ( this.hasWon() ){
+  		return false;
+  	}
+  	this.plays.push(word);
+  	this.points+=this.scrabbleGame.score(word)
+  },
+  hasWon: function(){
+  	if (this.points>100){
+  		return true;
+  	}else{
+  		return false;
+  	}
+  },
+  highestScoringWord: function(){
+  	return this.scrabbleGame.highestScorefrom(this.plays);
+  },
+  highestWordScore: function(){
+  	return this.scrabbleGame.score(this.highestScoringWord());
+  }
+}
+
+
+
+
+
+var myScrabble = new Scrabble;
+
+//make sure score chart prints out properly
+console.log(ScoreChart);
+
+//Scrabble tests
+//Make sure scrabble object works
+console.log(myScrabble.say_hello());
+//it can score uppercase words => 
+console.log(myScrabble.score("HELLO"));
+//it can score lowercase words
+console.log(myScrabble.score("hello"));
+
+console.log(myScrabble.highestScorefrom(["hello","goodbye","goodbya"]));
+console.log(myScrabble.highestScorefrom(["hello","held"]));
+
+
+var quai = new Player("Quai");
+console.log(quai.say_hello());
+quai.play("yuppy");
+console.log(quai.points);
+console.log(quai.plays);
+console.log(quai.hasWon());
+console.log(quai.points);
+quai.play("sweet");
+console.log(quai.plays);
+console.log(quai.highestScoringWord());
+console.log(quai.highestWordScore())
+
+
 module.exports = Scrabble;
